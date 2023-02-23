@@ -159,13 +159,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               }),
                           Container(
                             width: width,
-                            child: new RaisedButton(
-                              child: new Text(
+                            child: TextButton(
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Colors.blue)),
+                              child: Text(
                                 'Save',
                                 style: new TextStyle(color: Colors.white),
                               ),
                               onPressed: () => saveGoBack(),
-                              color: Colors.blue,
                             ),
                             margin: new EdgeInsets.all(20.0),
                           )

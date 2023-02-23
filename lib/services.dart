@@ -74,7 +74,9 @@ String makeURL(int type) {
           port +
           '/webapi/' +
           'DownloadStation/task.cgi?api=SYNO.DownloadStation.' +
-          'Task&version=1&method=create&destination='+destination+'&uri=');
+          'Task&version=1&method=create&destination=' +
+          destination +
+          '&uri=');
     case DELETE_DOWNLOAD:
       return ('http://' +
           server +
@@ -108,7 +110,8 @@ Future<bool> loadPreferences() async {
 }
 
 Future<String> fetchSID() async {
-  final response = await http.get(makeURL(SID_URL), headers: headers);
+  final response =
+      await http.get(Uri.parse(makeURL(SID_URL)), headers: headers);
   updateCookie(response);
 
   if (response.statusCode == 200) {
@@ -126,8 +129,8 @@ Future<String> fetchSID() async {
 Future<String> fetchAuth() async {
   var response;
   try {
-    response = await http.get(makeURL(AUTH_URL), headers: headers);
-  } catch(e) {
+    response = await http.get(Uri.parse(makeURL(AUTH_URL)), headers: headers);
+  } catch (e) {
     return null;
   }
   updateCookie(response);
@@ -148,7 +151,7 @@ Future<String> fetchAuth() async {
 Future<String> doSearch(String searchTerm) async {
   String searchString = makeURL(SEARCH_URL) + Uri.encodeFull(searchTerm);
 
-  final response = await http.get(searchString, headers: headers);
+  final response = await http.get(Uri.parse(searchString), headers: headers);
   updateCookie(response);
 
   if (response.statusCode == 200) {
@@ -168,7 +171,7 @@ Future<String> doSearch(String searchTerm) async {
 
 Future<SynoBt> getResults(String taskid) async {
   final response =
-      await http.get(makeURL(RESULT_URL) + taskid, headers: headers);
+      await http.get(Uri.parse(makeURL(RESULT_URL) + taskid), headers: headers);
   updateCookie(response);
 
   if (response.statusCode == 200) {
@@ -180,7 +183,8 @@ Future<SynoBt> getResults(String taskid) async {
 }
 
 Future<SynoDownloadTasks> getTasks() async {
-  final response = await http.get(makeURL(TASKS_URL), headers: headers);
+  final response =
+      await http.get(Uri.parse(makeURL(TASKS_URL)), headers: headers);
   updateCookie(response);
 
   if (response.statusCode == 200) {
@@ -192,13 +196,13 @@ Future<SynoDownloadTasks> getTasks() async {
 }
 
 Future<void> createDownload(String uri) async {
-  final response =
-      await http.get(makeURL(CREATE_DOWNLOAD) + uri, headers: headers);
+  final response = await http.get(Uri.parse(makeURL(CREATE_DOWNLOAD) + uri),
+      headers: headers);
   updateCookie(response);
 }
 
 Future<void> deleteDownload(String id) async {
-  final response =
-      await http.get(makeURL(DELETE_DOWNLOAD) + id, headers: headers);
+  final response = await http.get(Uri.parse(makeURL(DELETE_DOWNLOAD) + id),
+      headers: headers);
   updateCookie(response);
 }
